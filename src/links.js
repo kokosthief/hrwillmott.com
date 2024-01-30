@@ -1,6 +1,6 @@
 export const mainContent = {
   imgSrc: `/assets/profile.png`,
-  name: `Henry Willmott`,
+  name: `Henry Willmott 👷🏼‍♂️ 🪢`,
   tagline: `IRATA L1 | VCA-VOL | GWO FULL OFFSHORE`,
 };
 
@@ -24,6 +24,11 @@ export const socialLinks = [
     title: "GitHub",
     icon: "mdi:github",
     url: "https://github.com/kokosthief",
+  },
+  {
+    title: "SoundCloud",
+    icon: "mdi:music",
+    url: "https://dj.henners.bio",
   },
 ];
 

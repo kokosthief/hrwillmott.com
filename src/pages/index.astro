@@ -1,21 +1,34 @@
 ---
-import {Icon} from 'astro-icon';
-import {mainContent, links, socialLinks} from '../links';
+import { Icon } from "astro-icon";
+import { mainContent, links, socialLinks } from "../links";
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Henry Willmott 🔨</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Henry Willmott 👷🏼‍♂️ 🪢</title>
     <style>
- 
       body {
-          background-color: #212121;
-          color: #fff;
-          font-family: Arial, Helvetica, sans-serif;
-          overflow: hidden; /* Add this line to hide overflow */
+        background: linear-gradient(45deg, #12120c, #2a2f17, #041c46, #4b2f08);
+        background-size: 400% 400%;
+        animation: gradientAnimation 10s ease infinite;
+        color: #fff;
+        font-family: Arial, Helvetica, sans-serif;
+        overflow: hidden;
+      }
+
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
       }
       a {
         color: inherit;
@@ -28,13 +41,13 @@ import {mainContent, links, socialLinks} from '../links';
       .main__article {
         margin: 0 auto;
         max-width: 700px;
-        height: 100vh; 
+        height: 100vh;
         display: flex;
         flex-direction: column;
-        justify-content: center; 
-        align-items: center; 
-        padding: 0 1rem; 
-       } 
+        justify-content: center;
+        align-items: center;
+        padding: 0 1rem;
+      }
 
       .top__content {
         margin-bottom: 2rem;
@@ -47,17 +60,17 @@ import {mainContent, links, socialLinks} from '../links';
         height: auto;
       }
       .social-links__list {
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
-      max-width: 400px;
-      margin: auto;
-      padding-top: 15px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        max-width: 400px;
+        margin: auto;
+        padding-top: 15px;
       }
       .social-links__list .social-links__link {
         transition: transform 100ms ease-in-out;
       }
-      .social-links__list .social-links__link:hover { 
+      .social-links__list .social-links__link:hover {
         transform: scale(1.1);
       }
       .links__list {
@@ -90,28 +103,40 @@ import {mainContent, links, socialLinks} from '../links';
         transform: scale(1.025);
       }
     </style>
-	</head>
-	<body>
+  </head>
+  <body>
     <article class="main__article">
       <div class="top__content">
-        <img class="profile__img" width="128px" height="128px" src={mainContent.imgSrc} alt={`Profile image of ${mainContent.name}`} />
+        <img
+          class="profile__img"
+          width="128px"
+          height="128px"
+          src={mainContent.imgSrc}
+          alt={`Profile image of ${mainContent.name}`}
+        />
         <h1>{mainContent.name}</h1>
         <p>{mainContent.tagline}</p>
         <ul class="social-links__list">
-          {socialLinks.map((link) => (
-            <li class="social-links__link">
-              <a href={link.url}>
-                <Icon name={link.icon} width="36px" height="36px" />
-              </a>
-            </li>
-          ))}
+          {
+            socialLinks.map((link) => (
+              <li class="social-links__link">
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  <Icon name={link.icon} width="36px" height="36px" />
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </div>
       <ul class="links__list">
-        {links.map(link => (
-          <li class="links__link"><a href={link.url}>{link.text}</a></li>
-        ))}
+        {
+          links.map((link) => (
+            <li class="links__link">
+              <a href={link.url}>{link.text}</a>
+            </li>
+          ))
+        }
       </ul>
     </article>
-	</body>
+  </body>
 </html>
