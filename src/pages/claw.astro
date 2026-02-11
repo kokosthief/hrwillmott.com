@@ -1,0 +1,841 @@
+---
+// OpenClaw Setup by Henry Willmott
+const currentYear = new Date().getFullYear();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Henry Willmott - OpenClaw Setup & Automation. Real power user running AI automation 24/7 for business." />
+    <meta name="generator" content={Astro.generator} />
+    <title>OpenClaw Setup - Henry Willmott</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: linear-gradient(to bottom, #020617, #0f172a, #020617);
+        color: #fff;
+        line-height: 1.6;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      .container-small {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15), transparent 70%);
+        animation: pulse 4s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 10;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+      }
+
+      .gradient-text {
+        background: linear-gradient(to right, #60a5fa, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero p {
+        font-size: clamp(1.125rem, 2vw, 1.5rem);
+        color: #cbd5e1;
+        margin-bottom: 0.5rem;
+      }
+
+      .hero p.subtitle {
+        color: #94a3b8;
+        margin-bottom: 3rem;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        transition: all 0.2s;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: linear-gradient(to right, #2563eb, #7c3aed);
+        color: white;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+      }
+
+      .btn-secondary {
+        background: #1e293b;
+        color: white;
+        border: 1px solid #334155;
+      }
+
+      .btn-secondary:hover {
+        background: #334155;
+        border-color: #475569;
+      }
+
+      /* Section Styles */
+      section {
+        padding: 5rem 0;
+        position: relative;
+      }
+
+      section h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      /* About Me Section */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 3rem;
+        align-items: start;
+        margin-bottom: 3rem;
+      }
+
+      @media (max-width: 768px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+
+      .photo-placeholder {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        border-radius: 1rem;
+        padding: 4rem 2rem;
+        text-align: center;
+        border: 2px dashed #475569;
+        color: #94a3b8;
+        font-style: italic;
+      }
+
+      .about-content h3 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+        color: #60a5fa;
+      }
+
+      .about-content p {
+        color: #cbd5e1;
+        margin-bottom: 1.5rem;
+        font-size: 1.125rem;
+        line-height: 1.8;
+      }
+
+      .highlight-box {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid #334155;
+        border-radius: 1rem;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+      }
+
+      /* Features Grid */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .feature-card {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid #334155;
+        border-radius: 1rem;
+        padding: 2rem;
+        transition: transform 0.2s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-4px);
+        border-color: #60a5fa;
+      }
+
+      .feature-icon {
+        width: 3rem;
+        height: 3rem;
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+
+      .feature-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .feature-card p {
+        color: #94a3b8;
+      }
+
+      /* Packages */
+      .packages-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .package-card {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid #334155;
+        border-radius: 1rem;
+        padding: 2rem;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .package-card.featured {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));
+        border: 2px solid #60a5fa;
+        box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
+      }
+
+      .package-card:hover {
+        transform: scale(1.05);
+      }
+
+      .package-badge {
+        position: absolute;
+        top: -1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(to right, #2563eb, #7c3aed);
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+
+      .package-card h3 {
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .package-price {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(to right, #60a5fa, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+      }
+
+      .package-description {
+        color: #94a3b8;
+        margin-bottom: 1.5rem;
+      }
+
+      .package-features {
+        list-style: none;
+        margin-bottom: 2rem;
+      }
+
+      .package-features li {
+        padding: 0.5rem 0;
+        display: flex;
+        align-items: flex-start;
+        color: #cbd5e1;
+      }
+
+      .package-features li::before {
+        content: '✓';
+        color: #60a5fa;
+        font-weight: 700;
+        margin-right: 0.75rem;
+        flex-shrink: 0;
+      }
+
+      /* Why Me Section */
+      .why-me-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: start;
+      }
+
+      @media (max-width: 768px) {
+        .why-me-content {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .checklist li {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+        color: #cbd5e1;
+      }
+
+      .checklist h4 {
+        color: white;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      .checklist p {
+        color: #94a3b8;
+        font-size: 0.95rem;
+      }
+
+      .checklist li::before {
+        content: '●';
+        color: #60a5fa;
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        flex-shrink: 0;
+        line-height: 1.2;
+      }
+
+      .automation-list {
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid #334155;
+        border-radius: 1rem;
+        padding: 2rem;
+      }
+
+      .automation-list h4 {
+        margin-bottom: 1rem;
+        font-size: 1.125rem;
+      }
+
+      .automation-list ul {
+        list-style: none;
+      }
+
+      .automation-list li {
+        padding: 0.5rem 0;
+        color: #cbd5e1;
+      }
+
+      .automation-list li::before {
+        content: '▸';
+        color: #60a5fa;
+        margin-right: 0.5rem;
+      }
+
+      .quote {
+        text-align: center;
+        font-style: italic;
+        color: #94a3b8;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #334155;
+      }
+
+      /* Contact Section */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      @media (max-width: 768px) {
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .contact-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .contact-method {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid #334155;
+        border-radius: 0.75rem;
+        transition: all 0.2s;
+      }
+
+      .contact-method:hover {
+        border-color: #60a5fa;
+        transform: translateX(4px);
+      }
+
+      .contact-icon {
+        width: 3rem;
+        height: 3rem;
+        background: #334155;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .contact-method:hover .contact-icon {
+        background: #2563eb;
+      }
+
+      .contact-info p {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      .contact-info span {
+        color: #94a3b8;
+        font-size: 0.95rem;
+      }
+
+      .booking-card {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));
+        border: 2px solid #60a5fa;
+        border-radius: 1rem;
+        padding: 2rem;
+      }
+
+      .booking-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .booking-card p {
+        color: #cbd5e1;
+        margin-bottom: 1.5rem;
+      }
+
+      .location-note {
+        background: rgba(30, 41, 59, 0.3);
+        border: 1px solid #334155;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .location-note h4 {
+        font-size: 1.125rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .location-note p {
+        color: #94a3b8;
+        font-size: 0.95rem;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 3rem 0;
+        border-top: 1px solid #334155;
+        color: #64748b;
+        font-size: 0.95rem;
+      }
+
+      /* SVG Icons */
+      svg {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(-10px); }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>
+          AI Automation<br />
+          <span class="gradient-text">Made Simple</span>
+        </h1>
+        <p>I run OpenClaw for my own business 24/7.</p>
+        <p class="subtitle">Let me set it up for yours.</p>
+        
+        <div class="cta-buttons">
+          <a href="#packages" class="btn btn-primary">View Packages</a>
+          <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+        </div>
+
+        <div class="scroll-indicator">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #94a3b8;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about">
+      <div class="container-small">
+        <h2>About Me</h2>
+        <div class="about-grid">
+          <div class="photo-placeholder">
+            📸<br />Photo coming soon
+          </div>
+          <div class="about-content">
+            <h3>Henry Willmott</h3>
+            <p>
+              I'm a <strong>freelance entrepreneur in Amsterdam</strong> who runs OpenClaw for my own business 24/7. 
+              I'm not a consultant reading docs—I'm a <strong>real power user</strong> who lives this every day.
+            </p>
+            <p>
+              By day, I'm a <strong>rope access technician</strong>—working at heights, solving problems in the physical world. 
+              By night (and in between), I automate my digital life so I can focus on what matters.
+            </p>
+            <p>
+              I <strong>live on a boat</strong>, recently installed <strong>Starlink</strong> for connectivity, and built my entire automation stack 
+              from scratch through trial and error. What I'm offering you is the polished, battle-tested version.
+            </p>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <h3 style="text-align: center; margin-bottom: 1rem;">My OpenClaw handles:</h3>
+          <div class="features-grid">
+            <div>
+              <strong>💼 Business Automation</strong>
+              <ul style="list-style: none; margin-top: 0.5rem; color: #cbd5e1;">
+                <li>▸ Accounting workflows</li>
+                <li>▸ Invoice processing</li>
+                <li>▸ Expense tracking</li>
+              </ul>
+            </div>
+            <div>
+              <strong>📧 Communication</strong>
+              <ul style="list-style: none; margin-top: 0.5rem; color: #cbd5e1;">
+                <li>▸ Email scanning & categorization</li>
+                <li>▸ Telegram integration</li>
+                <li>▸ Smart notifications</li>
+              </ul>
+            </div>
+            <div>
+              <strong>🛠️ Project Management</strong>
+              <ul style="list-style: none; margin-top: 0.5rem; color: #cbd5e1;">
+                <li>▸ Task tracking</li>
+                <li>▸ Scheduled reports</li>
+                <li>▸ Cron job automation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What is OpenClaw -->
+    <section>
+      <div class="container-small">
+        <h2>What is OpenClaw?</h2>
+        <div class="highlight-box">
+          <p style="color: #cbd5e1; font-size: 1.125rem; margin-bottom: 2rem; line-height: 1.8;">
+            OpenClaw is an <strong style="color: #60a5fa;">open-source autonomous AI platform</strong> that runs locally on your computer. 
+            Unlike cloud-based AI tools, OpenClaw gives you complete control and privacy.
+          </p>
+          
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3>Email Management</h3>
+              <p>Automatically scan, categorize, and respond to emails with intelligent filters</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h3>Project Management</h3>
+              <p>Organize files, track projects, manage tasks with AI assistance</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                </svg>
+              </div>
+              <h3>Messaging Integration</h3>
+              <p>Connect Telegram, WhatsApp, and other platforms seamlessly</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3>Automation & Scheduling</h3>
+              <p>Schedule tasks, run reports, automate repetitive workflows</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages -->
+    <section id="packages">
+      <div class="container">
+        <h2>What You Get</h2>
+        <p style="text-align: center; color: #94a3b8; font-size: 1.25rem; margin-bottom: 3rem;">
+          Choose the package that fits your needs
+        </p>
+
+        <div class="packages-grid">
+          <div class="package-card">
+            <h3>Virtual Setup</h3>
+            <div class="package-price">€750</div>
+            <p class="package-description">Perfect for getting started with OpenClaw</p>
+            <ul class="package-features">
+              <li>2-hour video call session</li>
+              <li>Full OpenClaw installation</li>
+              <li>Workflow configuration</li>
+              <li>Telegram/WhatsApp integration</li>
+              <li>Model selection & optimization</li>
+              <li>Basic skills setup</li>
+              <li>Documentation & follow-up guide</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary" style="display: block; text-align: center;">Get Started</a>
+          </div>
+
+          <div class="package-card featured">
+            <div class="package-badge">MOST POPULAR</div>
+            <h3>Premium On-Site</h3>
+            <div class="package-price">€2,500</div>
+            <p class="package-description">Complete hardware + setup solution</p>
+            <ul class="package-features">
+              <li>Mac Mini + monitor + peripherals</li>
+              <li>In-person setup at your location</li>
+              <li>Full OpenClaw configuration</li>
+              <li>1-hour in-person training</li>
+              <li>Amsterdam area (travel fees outside)</li>
+              <li>Priority support for 30 days</li>
+              <li>Custom workflow optimization</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary" style="display: block; text-align: center;">Get Started</a>
+          </div>
+
+          <div class="package-card">
+            <h3>Monthly Support</h3>
+            <div class="package-price">€300/mo</div>
+            <p class="package-description">Ongoing maintenance & optimization</p>
+            <ul class="package-features">
+              <li>Continuous maintenance</li>
+              <li>Regular skill updates</li>
+              <li>Priority troubleshooting</li>
+              <li>Telegram support channel</li>
+              <li>Model optimization</li>
+              <li>Workflow improvements</li>
+              <li>Monthly check-in calls</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary" style="display: block; text-align: center;">Get Started</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Me -->
+    <section>
+      <div class="container-small">
+        <h2>Why Work With Me?</h2>
+        <div class="highlight-box">
+          <div class="why-me-content">
+            <div>
+              <h3 style="margin-bottom: 1.5rem;">I'm Not Just a Consultant</h3>
+              <ul class="checklist" style="list-style: none;">
+                <li>
+                  <div>
+                    <h4>Entrepreneur First</h4>
+                    <p>I understand business workflows, not just technology</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Battle-Tested Setup</h4>
+                    <p>Running accounting automation, project management, email scanning, and more</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Multi-Model Expertise</h4>
+                    <p>Configured fallback chains, model optimization, and cost-efficient setups</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="automation-list">
+              <h4>My OpenClaw handles:</h4>
+              <ul>
+                <li>Automated accounting workflows</li>
+                <li>Project management automation</li>
+                <li>Email scanning & categorization</li>
+                <li>Telegram integration for notifications</li>
+                <li>Scheduled cron jobs & reports</li>
+                <li>Multi-model fallback chains</li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="quote">
+            "I built my automation stack through trial and error. You get the polished, working version."
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container-small">
+        <h2>Get In Touch</h2>
+        <p style="text-align: center; color: #94a3b8; font-size: 1.25rem; margin-bottom: 3rem;">
+          Ready to automate? Let's talk about your needs
+        </p>
+
+        <div class="contact-grid">
+          <div class="contact-methods">
+            <a href="mailto:henry@hrwillmott.com" class="contact-method">
+              <div class="contact-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div class="contact-info">
+                <p>Email</p>
+                <span>henry@hrwillmott.com</span>
+              </div>
+            </a>
+
+            <a href="https://t.me/hennerrsss" target="_blank" rel="noopener noreferrer" class="contact-method">
+              <div class="contact-icon">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
+              </div>
+              <div class="contact-info">
+                <p>Telegram</p>
+                <span>@hennerrsss</span>
+              </div>
+            </a>
+
+            <a href="https://wa.me/31..." target="_blank" rel="noopener noreferrer" class="contact-method">
+              <div class="contact-icon">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+              </div>
+              <div class="contact-info">
+                <p>WhatsApp</p>
+                <span>+31 ... (add your number)</span>
+              </div>
+            </a>
+          </div>
+
+          <div>
+            <div class="booking-card">
+              <h3>Book a Session</h3>
+              <p>Schedule a free 15-minute discovery call to discuss your automation needs.</p>
+              <a href="https://calendly.com/henrywillmott" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display: block; text-align: center;">
+                Schedule Free Call
+              </a>
+              <p style="text-align: center; font-size: 0.95rem; color: #cbd5e1; margin-top: 1rem; margin-bottom: 0;">
+                No commitment • Just a friendly chat
+              </p>
+            </div>
+
+            <div class="location-note">
+              <h4>Based in Amsterdam</h4>
+              <p>On-site installations available in the Amsterdam area. Virtual setup available worldwide.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>© {currentYear} Henry Willmott. Empowering businesses with AI automation.</p>
+        <p style="margin-top: 0.5rem;">
+          <a href="https://openclaw.org" target="_blank" rel="noopener noreferrer" style="color: #60a5fa;">Powered by OpenClaw</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
