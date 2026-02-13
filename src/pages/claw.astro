@@ -183,13 +183,15 @@ const currentYear = new Date().getFullYear();
       }
 
       .photo-placeholder {
-        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
         border-radius: 1rem;
-        padding: 4rem 2rem;
-        text-align: center;
-        border: 2px dashed #475569;
-        color: #94a3b8;
-        font-style: italic;
+        overflow: hidden;
+      }
+
+      .photo-placeholder img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 1rem;
       }
 
       .about-content h3 {
@@ -545,21 +547,22 @@ const currentYear = new Date().getFullYear();
         <h2>About Me</h2>
         <div class="about-grid">
           <div class="photo-placeholder">
-            📸<br />Photo coming soon
+            <img src="/assets/henry-sailing.jpg" alt="Henry at the helm of his boat in Amsterdam" />
           </div>
           <div class="about-content">
             <h3>Henry Willmott</h3>
             <p>
-              I'm a <strong>freelance entrepreneur in Amsterdam</strong> who runs OpenClaw for my own business 24/7. 
-              I'm not a consultant reading docs—I'm a <strong>real power user</strong> who lives this every day.
+              I'm a <strong>freelance entrepreneur in Amsterdam</strong> who lives on a boat and sails every weekend. 
+              While I'm out on the water with the sailing club, or working at heights as a <strong>rope access technician</strong>, 
+              my OpenClaw is running in the background — handling accounting, scanning emails, managing projects, and keeping my business moving.
             </p>
             <p>
-              By day, I'm a <strong>rope access technician</strong>—working at heights, solving problems in the physical world. 
-              By night (and in between), I automate my digital life so I can focus on what matters.
+              That's the whole point. <strong>I built this setup so I can live my life</strong> — sailing, dancing, working with my hands — 
+              while my AI handles the digital work. I'm not a consultant reading docs. I'm a real power user who depends on this every single day.
             </p>
             <p>
-              I run OpenClaw for my own business every day — accounting, email, project management, all automated. 
-              What I'm offering you is a proven, working setup tailored to your workflow.
+              Now I want to give others the same freedom. Whether you're a freelancer, ZZP'er, or small business owner — 
+              I'll set up a proven, working system tailored to your workflow, so you can focus on what actually matters to you.
             </p>
           </div>
         </div>
