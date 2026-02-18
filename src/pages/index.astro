@@ -1,142 +1,328 @@
----
-import { Icon } from "astro-icon";
-import { mainContent, links, socialLinks } from "../links";
----
-
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>Henry Willmott 👷🏼‍♂️ 🪢</title>
+    <title>HRWILLMOTT | Independent Software Engineering Studio</title>
+    <meta
+      name="description"
+      content="HRWILLMOTT is an independent software engineering studio building production-grade web products and digital systems."
+    />
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap");
+
+      :root {
+        --bg: #080808;
+        --bg-soft: #0d0d0d;
+        --fg: #f2f7fa;
+        --muted: #95a8b3;
+        --accent: #00e5ff;
+        --glass: rgba(10, 19, 24, 0.5);
+        --glass-border: rgba(0, 229, 255, 0.28);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
       body {
-        background: linear-gradient(45deg, #12120c, #2a2f17, #041c46, #4b2f08);
-        background-size: 400% 400%;
-        animation: gradientAnimation 10s ease infinite;
-        color: #fff;
-        font-family: Arial, Helvetica, sans-serif;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        font-family: "Space Grotesk", sans-serif;
+        color: var(--fg);
+        background: radial-gradient(circle at 70% 10%, rgba(0, 229, 255, 0.12), transparent 45%),
+          radial-gradient(circle at 20% 80%, rgba(0, 229, 255, 0.08), transparent 45%), var(--bg);
         overflow: hidden;
       }
 
-      @keyframes gradientAnimation {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
-      }
-      a {
-        color: inherit;
-      }
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-      .main__article {
-        margin: 0 auto;
-        max-width: 700px;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 0 1rem;
+      .frame {
+        position: relative;
+        width: 100%;
+        min-height: 100svh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        padding: clamp(1rem, 2.2vw, 2rem);
+        isolation: isolate;
       }
 
-      .top__content {
-        margin-bottom: 2rem;
+      .frame::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image: linear-gradient(rgba(0, 229, 255, 0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 229, 255, 0.07) 1px, transparent 1px);
+        background-size: 30px 30px;
+        opacity: 0.23;
+        z-index: -2;
+      }
+
+      .frame::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02) 0,
+          rgba(255, 255, 255, 0.02) 1px,
+          transparent 3px,
+          transparent 6px
+        );
+        mix-blend-mode: screen;
+        opacity: 0.22;
+        z-index: -1;
+      }
+
+      .logo {
+        display: inline-block;
+        width: fit-content;
+      }
+
+      .logo-mark {
+        position: relative;
+        font-size: clamp(1.8rem, 4vw, 2.7rem);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--fg);
+        text-transform: uppercase;
+      }
+
+      .logo-mark::before,
+      .logo-mark::after {
+        content: "HRW";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .logo-mark::before {
+        color: var(--accent);
+        transform: translate(1px, 0);
+        opacity: 0.5;
+        clip-path: inset(0 0 55% 0);
+        animation: glitchTop 5s infinite linear alternate-reverse;
+      }
+
+      .logo-mark::after {
+        color: var(--accent);
+        transform: translate(-1px, 0);
+        opacity: 0.35;
+        clip-path: inset(58% 0 0 0);
+        animation: glitchBottom 4.2s infinite linear alternate-reverse;
+      }
+
+      .main {
+        align-self: center;
+        justify-self: center;
         text-align: center;
+        width: min(100%, 960px);
+        display: grid;
+        gap: clamp(0.75rem, 1.8vw, 1.4rem);
       }
-      .profile__img {
-        border-radius: 50%;
-        margin-bottom: 1rem;
-        width: 200px;
-        height: auto;
+
+      .brand {
+        margin: 0;
+        line-height: 0.94;
+        font-size: clamp(2.4rem, 10.2vw, 7.8rem);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-wrap: balance;
+        color: var(--fg);
+        text-shadow: 0 0 16px rgba(0, 229, 255, 0.35);
       }
-      .social-links__list {
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        max-width: 400px;
-        margin: auto;
-        padding-top: 15px;
+
+      .tagline {
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(0.95rem, 1.9vw, 1.35rem);
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
       }
-      .social-links__list .social-links__link {
-        transition: transform 100ms ease-in-out;
+
+      .contact {
+        justify-self: center;
+        width: min(100%, 760px);
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8rem;
+        border: 1px solid var(--glass-border);
+        background: linear-gradient(140deg, rgba(10, 18, 25, 0.58), rgba(7, 12, 16, 0.4));
+        border-radius: 18px;
+        backdrop-filter: blur(10px);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02), 0 18px 45px rgba(0, 0, 0, 0.45);
+        padding: clamp(0.85rem, 1.8vw, 1.25rem);
       }
-      .social-links__list .social-links__link:hover {
-        transform: scale(1.1);
+
+      .item {
+        min-width: 0;
+        padding: 0.35rem 0.45rem;
       }
-      .links__list {
-        width: 100%;
-        margin: 1rem auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+
+      .label {
+        margin: 0 0 0.3rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        color: var(--muted);
+        text-transform: uppercase;
       }
-      .links__list .links__link {
-        display: flex;
-        width: 100%;
-        text-align: center;
-        background-color: #fff;
-        color: #212121;
-        margin-bottom: 1rem;
-        border-radius: 3rem;
-        transition: transform 100ms ease-in-out;
-        cursor: pointer;
+
+      .value {
+        margin: 0;
+        font-size: clamp(0.9rem, 1.25vw, 1.02rem);
+        font-weight: 500;
       }
-      .links__list .links__link a {
-        padding: 1rem 2rem;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+
+      .value a {
+        color: var(--fg);
         text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 180ms ease, color 180ms ease;
       }
-      .links__list .links__link:hover {
-        transform: scale(1.025);
+
+      .value a:hover,
+      .value a:focus-visible {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .mono {
+        font-family: "JetBrains Mono", monospace;
+        color: var(--accent);
+      }
+
+      .pulse {
+        position: absolute;
+        right: 8%;
+        top: 17%;
+        width: clamp(130px, 16vw, 220px);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 229, 255, 0.4);
+        opacity: 0.4;
+        filter: blur(0.1px);
+        animation: floatPulse 8s ease-in-out infinite;
+        z-index: -1;
+      }
+
+      @keyframes glitchTop {
+        0%,
+        84%,
+        100% {
+          transform: translate(1px, 0);
+        }
+        86% {
+          transform: translate(2px, -1px);
+        }
+        88% {
+          transform: translate(-1px, 1px);
+        }
+      }
+
+      @keyframes glitchBottom {
+        0%,
+        80%,
+        100% {
+          transform: translate(-1px, 0);
+        }
+        83% {
+          transform: translate(-3px, 1px);
+        }
+        86% {
+          transform: translate(1px, -1px);
+        }
+      }
+
+      @keyframes floatPulse {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+          box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.2);
+        }
+        50% {
+          transform: translateY(-10px) scale(1.06);
+          box-shadow: 0 0 0 18px rgba(0, 229, 255, 0);
+        }
+      }
+
+      @media (max-width: 760px) {
+        .frame {
+          padding: 1rem;
+        }
+
+        .brand {
+          letter-spacing: 0.06em;
+        }
+
+        .tagline {
+          font-size: 0.85rem;
+          letter-spacing: 0.1em;
+        }
+
+        .contact {
+          grid-template-columns: 1fr;
+          gap: 0.15rem;
+          padding: 0.75rem;
+        }
+
+        .item {
+          padding: 0.25rem 0.2rem;
+        }
+
+        .pulse {
+          right: -18%;
+          top: 11%;
+          opacity: 0.25;
+        }
+      }
+
+      @media (max-height: 650px) {
+        .main {
+          gap: 0.5rem;
+        }
+
+        .tagline {
+          font-size: 0.8rem;
+        }
+
+        .contact {
+          padding: 0.65rem 0.8rem;
+        }
       }
     </style>
   </head>
   <body>
-    <article class="main__article">
-      <div class="top__content">
-        <img
-          class="profile__img"
-          width="128px"
-          height="128px"
-          src={mainContent.imgSrc}
-          alt={`Profile image of ${mainContent.name}`}
-        />
-        <h1>{mainContent.name}</h1>
-        <p>{mainContent.tagline}</p>
-        <ul class="social-links__list">
-          {
-            socialLinks.map((link) => (
-              <li class="social-links__link">
-                <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  <Icon name={link.icon} width="36px" height="36px" />
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-      <ul class="links__list">
-        {
-          links.map((link) => (
-            <li class="links__link">
-              <a href={link.url}>{link.text}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </article>
+    <div class="frame">
+      <header class="logo" aria-label="HRW logo">
+        <span class="logo-mark">HRW</span>
+      </header>
+
+      <main class="main">
+        <h1 class="brand">HRWILLMOTT</h1>
+        <p class="tagline">Independent Software Engineering Studio</p>
+      </main>
+
+      <section class="contact" aria-label="Contact details">
+        <div class="item">
+          <p class="label">Email</p>
+          <p class="value"><a href="mailto:henry@hrwillmott.com">henry@hrwillmott.com</a></p>
+        </div>
+        <div class="item">
+          <p class="label">Phone</p>
+          <p class="value"><a href="tel:+31683421604">+31 6 8342 1604</a></p>
+        </div>
+        <div class="item">
+          <p class="label">KVK</p>
+          <p class="value mono">87558467</p>
+        </div>
+      </section>
+
+      <div class="pulse" aria-hidden="true"></div>
+    </div>
   </body>
 </html>
