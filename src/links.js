@@ -6,14 +6,9 @@ export const mainContent = {
 
 export const socialLinks = [
   {
-    title: "Phone",
-    icon: "mdi:phone",
-    url: "https://api.whatsapp.com/send?phone=31683421604&_ga=2.113846863.934298603.1704190840-536151416.1704190839",
-  },
-  {
-    title: "Email",
-    icon: "mdi:mail",
-    url: "mailto:henry@hrwillmott.com",
+    title: "Contact form",
+    icon: "mdi:message-text",
+    url: "/#contact-title",
   },
   {
     title: "LinkedIn",
