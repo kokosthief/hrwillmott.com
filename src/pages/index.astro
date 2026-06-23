@@ -211,6 +211,12 @@
         opacity: 0.62;
       }
 
+      button.button {
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--fg);
+      }
+
       .website-field {
         position: absolute;
         left: -9999px;
@@ -262,7 +268,7 @@
           </p>
           <div class="actions" aria-label="Useful links">
             <a class="button" href="https://www.linkedin.com/in/henrywillmott/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a class="button" href="#contact">Contact</a>
+            <button class="button" type="button" data-open-contact>Contact</button>
           </div>
         </section>
 
@@ -303,9 +309,17 @@
     </div>
 
     <script>
+      const contactDetails = document.getElementById('contact');
+      const openContact = document.querySelector('[data-open-contact]');
       const form = document.getElementById('contact-form');
       const status = document.getElementById('form-status');
       const button = form?.querySelector('button[type="submit"]');
+
+      openContact?.addEventListener('click', () => {
+        contactDetails.open = true;
+        contactDetails.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        form?.querySelector('input[name="name"]')?.focus({ preventScroll: true });
+      });
 
       form?.addEventListener('submit', async (event) => {
         event.preventDefault();
