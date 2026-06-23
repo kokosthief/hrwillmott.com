@@ -3,27 +3,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>HRWILLMOTT | Henry Willmott</title>
+    <title>HRWILLMOTT</title>
     <meta
       name="description"
-      content="Henry Willmott — rope access technician, practical systems builder, and independent operator based in Amsterdam."
+      content="HRWILLMOTT — the official internet cupboard for Henry Willmott's Dutch company paperwork, contact, and occasional useful things."
     />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap");
 
       :root {
-        --bg: #ffffff;
-        --fg: #171717;
-        --muted: #666666;
-        --soft: #fafafa;
-        --line: rgba(0, 0, 0, 0.08);
-        --focus: #0072f5;
+        --bg: #f7f4ed;
+        --fg: #181512;
+        --muted: #6d6257;
+        --line: rgba(24, 21, 18, 0.12);
+        --card: rgba(255, 255, 255, 0.68);
+        --shadow: rgba(20, 16, 12, 0.08) 0 18px 60px;
+        --focus: #7c3aed;
         --success: #0f7b45;
         --error: #b42318;
-        --shadow-card: rgba(0, 0, 0, 0.08) 0 0 0 1px,
-          rgba(0, 0, 0, 0.04) 0 2px 2px,
-          rgba(0, 0, 0, 0.04) 0 8px 8px -8px,
-          #fafafa 0 0 0 1px;
       }
 
       * {
@@ -34,140 +31,126 @@
       body {
         margin: 0;
         min-height: 100%;
+        background:
+          radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.9), transparent 26rem),
+          radial-gradient(circle at 80% 5%, rgba(124, 58, 237, 0.12), transparent 22rem),
+          var(--bg);
+        color: var(--fg);
+        font-family: Geist, Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
       body {
-        font-family: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        color: var(--fg);
-        background:
-          radial-gradient(circle at 18% 18%, rgba(0, 114, 245, 0.06), transparent 28rem),
-          radial-gradient(circle at 82% 10%, rgba(23, 23, 23, 0.04), transparent 24rem),
-          var(--bg);
-        font-feature-settings: "liga" 1;
-      }
-
-      a {
-        color: inherit;
-      }
-
-      .frame {
-        width: min(100%, 1180px);
-        min-height: 100svh;
-        margin: 0 auto;
-        padding: clamp(1.1rem, 3vw, 2rem);
+        min-height: 100vh;
         display: grid;
-        grid-template-rows: auto 1fr auto;
-        gap: clamp(2rem, 5vw, 5rem);
+        place-items: center;
+        padding: clamp(1rem, 3vw, 2.5rem);
       }
 
-      header {
+      .page {
+        width: min(100%, 760px);
+        display: grid;
+        gap: clamp(1.4rem, 4vw, 2.4rem);
+      }
+
+      header,
+      footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
-      }
-
-      .logo {
-        font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        font-size: 0.82rem;
-        font-weight: 500;
-        letter-spacing: -0.02em;
-        text-transform: uppercase;
-      }
-
-      .nav-note {
         color: var(--muted);
-        font-size: 0.9rem;
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .mark {
+        color: var(--fg);
+        font-weight: 600;
       }
 
       main {
         display: grid;
-        grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-        align-items: center;
-        gap: clamp(2rem, 6vw, 5rem);
+        gap: 1rem;
+      }
+
+      .hero,
+      .contact {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
+      }
+
+      .hero {
+        padding: clamp(1.5rem, 5vw, 3.2rem);
       }
 
       .eyebrow {
-        display: inline-flex;
-        width: fit-content;
-        align-items: center;
-        gap: 0.45rem;
-        margin: 0 0 1.25rem;
-        padding: 0.28rem 0.7rem;
-        border-radius: 999px;
-        box-shadow: rgba(0, 0, 0, 0.08) 0 0 0 1px;
-        background: #fff;
-        color: #4d4d4d;
-        font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        font-size: 0.75rem;
-      }
-
-      .dot {
-        width: 0.42rem;
-        height: 0.42rem;
-        border-radius: 999px;
-        background: #171717;
+        margin: 0 0 1rem;
+        color: var(--muted);
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
       }
 
       h1 {
-        max-width: 720px;
+        max-width: 11ch;
         margin: 0;
-        font-size: clamp(3.2rem, 9vw, 6.8rem);
-        line-height: 0.93;
-        letter-spacing: clamp(-0.24rem, -0.045em, -0.12rem);
-        font-weight: 600;
-        text-wrap: balance;
+        font-size: clamp(3.5rem, 13vw, 8.5rem);
+        line-height: 0.82;
+        letter-spacing: -0.08em;
       }
 
-      .intro {
-        max-width: 650px;
-        margin: 1.35rem 0 0;
+      .joke {
+        max-width: 36rem;
+        margin: clamp(1.4rem, 3vw, 2rem) 0 0;
         color: var(--muted);
-        font-size: clamp(1.05rem, 2vw, 1.35rem);
+        font-size: clamp(1.08rem, 2vw, 1.35rem);
         line-height: 1.55;
       }
 
-      .tags {
+      .actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.55rem;
-        margin-top: 1.6rem;
+        gap: 0.7rem;
+        margin-top: 1.4rem;
       }
 
-      .tag {
-        padding: 0.32rem 0.72rem;
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.7rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--line);
         border-radius: 999px;
-        box-shadow: rgba(0, 0, 0, 0.08) 0 0 0 1px;
         background: #fff;
-        color: #4d4d4d;
-        font-size: 0.86rem;
-        text-decoration: none;
-      }
-
-      a.tag:hover {
         color: var(--fg);
-        box-shadow: rgba(0, 0, 0, 0.16) 0 0 0 1px;
+        text-decoration: none;
+        font-weight: 500;
       }
 
-      .card {
-        background: #fff;
-        border-radius: 14px;
-        box-shadow: var(--shadow-card);
-        padding: clamp(1rem, 2.4vw, 1.4rem);
+      .button:hover {
+        transform: translateY(-1px);
       }
 
-      .card h2 {
-        margin: 0;
-        font-size: clamp(1.45rem, 3vw, 2rem);
-        line-height: 1.1;
-        letter-spacing: -0.06rem;
+      .contact {
+        padding: clamp(1rem, 3vw, 1.4rem);
+      }
+
+      .contact summary {
+        cursor: pointer;
+        color: var(--fg);
         font-weight: 600;
       }
 
-      .card p {
-        margin: 0.65rem 0 1rem;
+      .contact p {
+        margin: 0.75rem 0 1rem;
         color: var(--muted);
-        line-height: 1.5;
       }
 
       form {
@@ -178,70 +161,63 @@
       label {
         display: grid;
         gap: 0.35rem;
-        color: #4d4d4d;
-        font-size: 0.85rem;
+        color: var(--muted);
+        font-size: 0.86rem;
         font-weight: 500;
       }
 
       input,
       textarea {
         width: 100%;
-        border: 0;
-        border-radius: 8px;
-        background: var(--soft);
-        box-shadow: rgba(0, 0, 0, 0.08) 0 0 0 1px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.82);
         color: var(--fg);
         font: inherit;
         padding: 0.78rem 0.85rem;
         outline: none;
-        transition: box-shadow 160ms ease, background 160ms ease;
       }
 
       textarea {
-        min-height: 8.5rem;
+        min-height: 8rem;
         resize: vertical;
       }
 
       input:focus,
-      textarea:focus {
-        background: #fff;
-        box-shadow: var(--focus) 0 0 0 2px;
+      textarea:focus,
+      button:focus-visible,
+      a:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 2px;
+      }
+
+      button {
+        width: fit-content;
+        border: 0;
+        border-radius: 999px;
+        background: var(--fg);
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 600;
+        padding: 0.82rem 1rem;
+      }
+
+      button:disabled {
+        cursor: wait;
+        opacity: 0.62;
       }
 
       .website-field {
         position: absolute;
         left: -9999px;
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      button {
-        border: 0;
-        border-radius: 8px;
-        background: var(--fg);
-        color: #fff;
-        cursor: pointer;
-        font: inherit;
-        font-weight: 500;
-        padding: 0.86rem 1rem;
-        transition: transform 160ms ease, opacity 160ms ease;
-      }
-
-      button:hover,
-      button:focus-visible {
-        transform: translateY(-1px);
-      }
-
-      button:disabled {
-        cursor: progress;
-        opacity: 0.62;
-        transform: none;
       }
 
       .status {
-        min-height: 1.35rem;
-        margin: 0.15rem 0 0;
-        font-size: 0.9rem;
+        min-height: 1.2rem;
+        margin: 0;
+        color: var(--muted);
       }
 
       .status.success {
@@ -252,65 +228,45 @@
         color: var(--error);
       }
 
-      footer {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 1rem;
-        color: var(--muted);
-        font-size: 0.85rem;
-      }
-
-      footer span:first-child {
-        font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      }
-
-      @media (max-width: 820px) {
-        .frame {
-          gap: 2.2rem;
-        }
-
-        header {
+      @media (max-width: 620px) {
+        header,
+        footer {
           align-items: flex-start;
+          flex-direction: column;
         }
 
-        main {
-          grid-template-columns: 1fr;
-          align-items: start;
-        }
-
-        .nav-note {
-          text-align: right;
+        h1 {
+          font-size: clamp(3.2rem, 22vw, 6rem);
         }
       }
     </style>
   </head>
   <body>
-    <div class="frame">
+    <div class="page">
       <header>
-        <div class="logo">HRWILLMOTT</div>
-        <div class="nav-note">Amsterdam · LinkedIn · contact</div>
+        <span class="mark">HRWILLMOTT</span>
+        <span>Dutch company-shaped object</span>
       </header>
 
       <main>
-        <section aria-labelledby="hero-title">
-          <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Independent operator</p>
-          <h1 id="hero-title">Henry Willmott — rope access, practical systems, independent work.</h1>
-          <p class="intro">
-            Henry Willmott — rope access technician, boat-dweller, and builder of small practical tools. Based in Amsterdam, working across physical jobs, operations, and odd technical problems.
+        <section class="hero" aria-labelledby="hero-title">
+          <p class="eyebrow">Official-ish internet cupboard</p>
+          <h1 id="hero-title">Not a startup.</h1>
+          <p class="joke">
+            HRWILLMOTT is mostly here so accountants, clients, forms, robots, and mildly suspicious institutions can agree that Henry Willmott exists.
           </p>
-          <div class="tags" aria-label="Work areas">
-            <span class="tag">Rope access</span>
-            <span class="tag">Small business systems</span>
-            <span class="tag">Boats & practical projects</span>
-            <span class="tag">Automation</span>
-            <a class="tag" href="https://www.linkedin.com/in/henrywillmott/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <p class="joke">
+            Currently building things, climbing things, moving things around, and resisting the urge to turn every domain name into a business model.
+          </p>
+          <div class="actions" aria-label="Useful links">
+            <a class="button" href="https://www.linkedin.com/in/henrywillmott/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a class="button" href="#contact">Contact</a>
           </div>
         </section>
 
-        <section class="card" aria-labelledby="contact-title">
-          <h2 id="contact-title">Contact</h2>
-          <p>Send a short message if there is a practical reason to connect.</p>
+        <details class="contact" id="contact">
+          <summary>Send a message</summary>
+          <p>Useful messages, admin things, and real-world reasons to connect.</p>
           <form id="contact-form" method="post" action="/api/contact">
             <label>
               Name
@@ -322,7 +278,7 @@
             </label>
             <label>
               What is this about?
-              <input name="subject" placeholder="Rope access, project, admin, odd request…" />
+              <input name="subject" placeholder="Admin, project, rope access, odd request…" />
             </label>
             <label>
               Message
@@ -332,15 +288,15 @@
               Website
               <input name="website" tabindex="-1" autocomplete="off" />
             </label>
-            <button type="submit">Send message</button>
+            <button type="submit">Send</button>
             <p class="status" id="form-status" role="status" aria-live="polite"></p>
           </form>
-        </section>
+        </details>
       </main>
 
       <footer>
         <span>KvK 87558467</span>
-        <span>Amsterdam</span>
+        <span>Amsterdam, for now</span>
       </footer>
     </div>
 
