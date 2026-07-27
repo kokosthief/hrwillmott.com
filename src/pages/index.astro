@@ -3,13 +3,49 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>HRWILLMOTT</title>
+    <title>HRWILLMOTT — Not a startup.</title>
     <meta
       name="description"
-      content="HRWILLMOTT — the official internet cupboard for Henry Willmott's Dutch company paperwork, contact, and occasional useful things."
+      content="HRWILLMOTT — the official internet cupboard for Henry Willmott's Dutch company paperwork, practical work, contact, and occasional useful things."
     />
+    <link rel="canonical" href="https://hrwillmott.com/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#181512" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="HRWILLMOTT" />
+    <meta property="og:title" content="HRWILLMOTT — Not a startup." />
+    <meta property="og:description" content="A Dutch company-shaped object and its official-ish internet cupboard." />
+    <meta property="og:url" content="https://hrwillmott.com/" />
+    <meta property="og:image" content="https://hrwillmott.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="HRWILLMOTT — Not a startup. Dutch company-shaped object." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HRWILLMOTT — Not a startup." />
+    <meta name="twitter:description" content="A Dutch company-shaped object and its official-ish internet cupboard." />
+    <meta name="twitter:image" content="https://hrwillmott.com/og.png" />
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "HRWILLMOTT",
+        "legalName": "HRWILLMOTT",
+        "url": "https://hrwillmott.com/",
+        "logo": "https://hrwillmott.com/favicon.svg",
+        "identifier": "KvK 87558467",
+        "vatID": "NL004438663B04",
+        "founder": {
+          "@type": "Person",
+          "name": "Henry Willmott",
+          "sameAs": "https://www.linkedin.com/in/henrywillmott/"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Amsterdam",
+          "addressCountry": "NL"
+        }
+      }
+    </script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap");
 
@@ -18,24 +54,28 @@
         --fg: #181512;
         --muted: #6d6257;
         --line: rgba(24, 21, 18, 0.12);
+        --line-strong: rgba(24, 21, 18, 0.22);
         --card: rgba(255, 255, 255, 0.68);
+        --card-solid: rgba(255, 255, 255, 0.9);
+        --purple: #7c3aed;
+        --purple-wash: rgba(124, 58, 237, 0.1);
         --shadow: rgba(20, 16, 12, 0.08) 0 18px 60px;
         --focus: #7c3aed;
         --success: #0f7b45;
         --error: #b42318;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
 
       html,
       body {
         margin: 0;
         min-height: 100%;
         background:
-          radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.9), transparent 26rem),
-          radial-gradient(circle at 80% 5%, rgba(124, 58, 237, 0.12), transparent 22rem),
+          radial-gradient(circle at 15% 8%, rgba(255, 255, 255, 0.95), transparent 26rem),
+          radial-gradient(circle at 80% 2%, rgba(124, 58, 237, 0.12), transparent 24rem),
           var(--bg);
         color: var(--fg);
         font-family: Geist, Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -44,7 +84,7 @@
       body {
         min-height: 100vh;
         display: grid;
-        place-items: center;
+        place-items: start center;
         padding: clamp(1rem, 3vw, 2.5rem);
       }
 
@@ -72,13 +112,39 @@
         font-weight: 600;
       }
 
+      .company-shape {
+        width: auto;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        font-weight: inherit;
+        letter-spacing: inherit;
+        text-transform: inherit;
+      }
+
+      .company-shape:hover { color: var(--fg); }
+
+      .legal-stamp {
+        margin-left: auto;
+        padding: 0.38rem 0.55rem;
+        border: 1px solid var(--purple);
+        color: var(--purple);
+        font-weight: 600;
+        transform: rotate(-1.5deg);
+      }
+
+      .legal-stamp[hidden] { display: none; }
+
       main {
         display: grid;
         gap: 1rem;
       }
 
       .hero,
-      .contact {
+      .panel {
         border: 1px solid var(--line);
         border-radius: 24px;
         background: var(--card);
@@ -86,17 +152,20 @@
         backdrop-filter: blur(18px);
       }
 
-      .hero {
-        padding: clamp(1.5rem, 5vw, 3.2rem);
+      .hero { padding: clamp(1.5rem, 5vw, 3.2rem); }
+
+      .eyebrow,
+      .section-label,
+      .current-status {
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
       }
 
       .eyebrow {
         margin: 0 0 1rem;
         color: var(--muted);
-        font-family: "Geist Mono", ui-monospace, monospace;
-        font-size: 0.78rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
       }
 
       h1 {
@@ -115,12 +184,14 @@
         line-height: 1.55;
       }
 
-      .actions {
+      .actions,
+      .subject-chips {
         display: flex;
         flex-wrap: wrap;
         gap: 0.7rem;
-        margin-top: 1.4rem;
       }
+
+      .actions { margin-top: 1.4rem; }
 
       .button {
         display: inline-flex;
@@ -134,25 +205,88 @@
         color: var(--fg);
         text-decoration: none;
         font-weight: 500;
+        transition: transform 150ms ease, border-color 150ms ease;
       }
 
       .button:hover {
+        border-color: var(--line-strong);
         transform: translateY(-1px);
       }
 
-      .contact {
-        padding: clamp(1rem, 3vw, 1.4rem);
+      .current-status {
+        display: flex;
+        gap: 0.7rem;
+        margin: 1.5rem 0 0;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        line-height: 1.6;
       }
 
-      .contact summary {
+      .current-status strong { color: var(--fg); }
+
+      .panel { padding: clamp(1rem, 3vw, 1.4rem); }
+
+      .panel > summary {
         cursor: pointer;
         color: var(--fg);
         font-weight: 600;
       }
 
-      .contact p {
+      .panel > p {
         margin: 0.75rem 0 1rem;
         color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .department-list {
+        display: grid;
+        border-top: 1px solid var(--line);
+      }
+
+      .department {
+        padding: 0.9rem 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .department summary {
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .department p {
+        margin: 0.65rem 0 0 1.2rem;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .legal-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin: 1rem 0;
+      }
+
+      .legal-item {
+        padding: 0.85rem;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--card-solid);
+      }
+
+      .legal-item span {
+        display: block;
+        margin-bottom: 0.25rem;
+        color: var(--muted);
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .legal-note {
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 0.76rem;
       }
 
       form {
@@ -160,12 +294,24 @@
         gap: 0.8rem;
       }
 
-      label {
-        display: grid;
-        gap: 0.35rem;
+      label,
+      legend {
         color: var(--muted);
         font-size: 0.86rem;
         font-weight: 500;
+      }
+
+      label {
+        display: grid;
+        gap: 0.35rem;
+      }
+
+      fieldset {
+        display: grid;
+        gap: 0.55rem;
+        margin: 0;
+        padding: 0;
+        border: 0;
       }
 
       input,
@@ -217,6 +363,28 @@
         color: var(--fg);
       }
 
+      .subject-chip {
+        padding: 0.55rem 0.75rem;
+        border: 1px solid var(--line);
+        background: var(--card-solid);
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 500;
+      }
+
+      .subject-chip:hover,
+      .subject-chip[aria-pressed="true"] {
+        border-color: var(--purple);
+        background: var(--purple-wash);
+        color: var(--purple);
+      }
+
+      .copy-button {
+        background: transparent;
+        color: var(--fg);
+        border: 1px solid var(--line);
+      }
+
       .website-field {
         position: absolute;
         left: -9999px;
@@ -228,24 +396,32 @@
         color: var(--muted);
       }
 
-      .status.success {
-        color: var(--success);
-      }
+      .status.success { color: var(--success); }
+      .status.error { color: var(--error); }
 
-      .status.error {
-        color: var(--error);
-      }
+      footer { padding-bottom: 0.4rem; }
 
       @media (max-width: 620px) {
+        .page { width: calc(100vw - 2rem); }
+
         header,
         footer {
           align-items: flex-start;
           flex-direction: column;
         }
 
-        h1 {
-          font-size: clamp(3.2rem, 22vw, 6rem);
-        }
+        .legal-stamp { margin-left: 0; }
+
+        h1 { font-size: clamp(3.2rem, 22vw, 6rem); }
+
+        .legal-grid { grid-template-columns: 1fr; }
+
+        .current-status { flex-direction: column; gap: 0.2rem; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        * { transition: none !important; }
       }
     </style>
   </head>
@@ -253,7 +429,15 @@
     <div class="page">
       <header>
         <span class="mark">HRWILLMOTT</span>
-        <span>Dutch company-shaped object</span>
+        <button
+          class="company-shape"
+          type="button"
+          data-company-shape
+          aria-expanded="false"
+          aria-controls="legal-stamp"
+          title="Legally speaking?"
+        >Dutch company-shaped object</button>
+        <span class="legal-stamp" id="legal-stamp" role="status" aria-live="polite" hidden>LEGALLY SPEAKING: YES</span>
       </header>
 
       <main>
@@ -270,9 +454,50 @@
             <a class="button" href="https://www.linkedin.com/in/henrywillmott/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <button class="button" type="button" data-open-contact>Contact</button>
           </div>
+          <p class="current-status"><strong>CURRENTLY:</strong> somewhere between a spreadsheet and a steel boat.</p>
         </section>
 
-        <details class="contact" id="contact">
+        <details class="panel departments">
+          <summary>Departments, apparently</summary>
+          <p>One Dutch company. Several unrelated-looking reasons to own work trousers.</p>
+          <div class="department-list">
+            <details class="department">
+              <summary>Rope access</summary>
+              <p>Industrial work performed in places that would benefit from a floor.</p>
+            </details>
+            <details class="department">
+              <summary>Software and strange internet objects</summary>
+              <p>Small operational tools built because the spreadsheet had become sentient.</p>
+            </details>
+            <details class="department">
+              <summary>Events and DJ things</summary>
+              <p>Music, facilitation, production, and the occasional controlled loss of professionalism.</p>
+            </details>
+            <details class="department">
+              <summary>Boats and maritime schemes</summary>
+              <p>A steel boat, an unreasonable number of plans, and cautious use of the word “seaworthy.”</p>
+            </details>
+            <details class="department">
+              <summary>Administrative survival</summary>
+              <p>Invoices sent, forms completed, receipts located. Eventually.</p>
+            </details>
+          </div>
+        </details>
+
+        <details class="panel official-details">
+          <summary>Unfortunately, the official details</summary>
+          <p>For forms that refuse to accept “Dutch company-shaped object” as a legal entity type.</p>
+          <div class="legal-grid" id="company-details">
+            <div class="legal-item"><span>Legal name</span><strong>HRWILLMOTT</strong></div>
+            <div class="legal-item"><span>Chamber of Commerce</span><strong>KvK 87558467</strong></div>
+            <div class="legal-item"><span>VAT number</span><strong>NL004438663B04</strong></div>
+            <div class="legal-item"><span>Based in</span><strong>Amsterdam, mostly</strong></div>
+          </div>
+          <button class="copy-button" type="button" data-copy-details>Copy company details</button>
+          <p class="status legal-note" id="copy-status" role="status" aria-live="polite"></p>
+        </details>
+
+        <details class="panel contact" id="contact">
           <summary>Send a message</summary>
           <p>Useful messages, admin things, and real-world reasons to connect.</p>
           <form id="contact-form" method="post" action="/api/contact">
@@ -284,9 +509,18 @@
               Email
               <input name="email" type="email" autocomplete="email" required />
             </label>
+            <fieldset>
+              <legend>Quick subject</legend>
+              <div class="subject-chips">
+                <button class="subject-chip" type="button" data-subject="Work" aria-pressed="false">Work</button>
+                <button class="subject-chip" type="button" data-subject="Admin" aria-pressed="false">Admin</button>
+                <button class="subject-chip" type="button" data-subject="Rope access" aria-pressed="false">Rope access</button>
+                <button class="subject-chip" type="button" data-subject="Odd request" aria-pressed="false">Odd request</button>
+              </div>
+            </fieldset>
             <label>
               What is this about?
-              <input name="subject" placeholder="Admin, project, rope access, odd request…" />
+              <input name="subject" placeholder="Choose one above or write your own…" />
             </label>
             <label>
               Message
@@ -309,16 +543,55 @@
     </div>
 
     <script>
+      const companyShape = document.querySelector('[data-company-shape]');
+      const legalStamp = document.getElementById('legal-stamp');
       const contactDetails = document.getElementById('contact');
       const openContact = document.querySelector('[data-open-contact]');
       const form = document.getElementById('contact-form');
       const status = document.getElementById('form-status');
       const button = form?.querySelector('button[type="submit"]');
+      const subjectInput = form?.querySelector('input[name="subject"]');
+      const subjectChips = document.querySelectorAll('[data-subject]');
+      const copyButton = document.querySelector('[data-copy-details]');
+      const copyStatus = document.getElementById('copy-status');
+
+      companyShape?.addEventListener('click', () => {
+        const revealing = legalStamp.hidden;
+        legalStamp.hidden = !revealing;
+        companyShape.setAttribute('aria-expanded', String(revealing));
+      });
 
       openContact?.addEventListener('click', () => {
         contactDetails.open = true;
         contactDetails.scrollIntoView({ behavior: 'smooth', block: 'center' });
         form?.querySelector('input[name="name"]')?.focus({ preventScroll: true });
+      });
+
+      subjectChips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          subjectChips.forEach((item) => item.setAttribute('aria-pressed', 'false'));
+          chip.setAttribute('aria-pressed', 'true');
+          subjectInput.value = chip.dataset.subject || '';
+          subjectInput.focus();
+        });
+      });
+
+      subjectInput?.addEventListener('input', () => {
+        subjectChips.forEach((chip) => {
+          chip.setAttribute('aria-pressed', String(chip.dataset.subject === subjectInput.value));
+        });
+      });
+
+      copyButton?.addEventListener('click', async () => {
+        const details = 'HRWILLMOTT\nKvK 87558467\nVAT NL004438663B04\nAmsterdam, Netherlands';
+        try {
+          await navigator.clipboard.writeText(details);
+          copyStatus.textContent = 'Copied. Bureaucracy briefly defeated.';
+          copyStatus.className = 'status legal-note success';
+        } catch {
+          copyStatus.textContent = 'Copying failed. The bureaucracy fought back.';
+          copyStatus.className = 'status legal-note error';
+        }
       });
 
       form?.addEventListener('submit', async (event) => {
@@ -334,12 +607,13 @@
             body: new FormData(form),
           });
           const data = await response.json().catch(() => ({}));
-          if (!response.ok || !data.ok) throw new Error(data.error || 'Message could not be sent.');
+          if (!response.ok || !data.ok) throw new Error('send-failed');
           form.reset();
-          status.textContent = 'Sent. I’ll reply when I’ve seen it.';
+          subjectChips.forEach((chip) => chip.setAttribute('aria-pressed', 'false'));
+          status.textContent = 'Message filed somewhere alarmingly official.';
           status.className = 'status success';
-        } catch (error) {
-          status.textContent = error.message || 'Could not send. Try again later.';
+        } catch {
+          status.textContent = 'The bureaucracy has rejected this attempt. Please try again.';
           status.className = 'status error';
         } finally {
           button.disabled = false;

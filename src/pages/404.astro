@@ -1,0 +1,75 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nothing in this cupboard — HRWILLMOTT</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#181512" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap");
+      :root { --bg: #f7f4ed; --fg: #181512; --muted: #6d6257; --line: rgba(24, 21, 18, 0.12); }
+      * { box-sizing: border-box; }
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 1rem;
+        background:
+          radial-gradient(circle at 80% 5%, rgba(124, 58, 237, 0.12), transparent 24rem),
+          var(--bg);
+        color: var(--fg);
+        font-family: Geist, Inter, system-ui, sans-serif;
+      }
+      main {
+        width: min(100%, 720px);
+        padding: clamp(1.5rem, 6vw, 4rem);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: rgba(20, 16, 12, 0.08) 0 18px 60px;
+      }
+      .code {
+        margin: 0 0 1rem;
+        color: var(--muted);
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+      }
+      h1 {
+        max-width: 9ch;
+        margin: 0;
+        font-size: clamp(3.4rem, 12vw, 7.5rem);
+        line-height: 0.86;
+        letter-spacing: -0.07em;
+      }
+      p {
+        max-width: 34rem;
+        margin: 1.5rem 0;
+        color: var(--muted);
+        font-size: clamp(1.05rem, 2vw, 1.25rem);
+        line-height: 1.55;
+      }
+      a {
+        display: inline-flex;
+        padding: 0.78rem 1rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--fg);
+        font-weight: 600;
+        text-decoration: none;
+      }
+      a:focus-visible { outline: 2px solid #7c3aed; outline-offset: 2px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="code">ERROR 404 / ADMINISTRATIVELY UNAVAILABLE</p>
+      <h1>Nothing in this cupboard.</h1>
+      <p>This page either moved, never existed, or became a separate business model.</p>
+      <a href="/">Return to the official-ish cupboard</a>
+    </main>
+  </body>
+</html>
