@@ -40,6 +40,10 @@ test('homepage keeps interactive controls accessible', () => {
   assert.match(indexSource, /legend>Quick subject/);
 });
 
+test('contact form submits a body the server parser understands', () => {
+  assert.match(indexSource, /body:\s*new URLSearchParams\(new FormData\(form\)\)/);
+});
+
 test('homepage constrains the mobile page inside the padded viewport', () => {
   assert.match(indexSource, /\.page\s*\{\s*width:\s*calc\(100vw - 2rem\);/);
 });
