@@ -44,6 +44,29 @@ test('contact form submits a body the server parser understands', () => {
   assert.match(indexSource, /body:\s*new URLSearchParams\(new FormData\(form\)\)/);
 });
 
+test('contact form initializes invisible BotID protection before fetch submissions', () => {
+  assert.match(indexSource, /import\s*\{\s*initBotId\s*\}\s*from\s*'botid\/client\/core'/);
+  assert.match(indexSource, /path:\s*'\/api\/contact'/);
+  assert.match(indexSource, /method:\s*'POST'/);
+  assert.match(indexSource, /checkLevel:\s*'basic'/);
+});
+
+test('Vercel proxies BotID challenge assets through the site origin', async () => {
+  const vercelConfig = JSON.parse(await readFile(new URL('../vercel.json', import.meta.url), 'utf8'));
+  assert.equal(vercelConfig.rewrites.length, 2);
+  assert.equal(vercelConfig.rewrites[0].destination, 'https://api.vercel.com/bot-protection/v1/challenge');
+  assert.equal(vercelConfig.rewrites[1].destination, 'https://api.vercel.com/bot-protection/v1/proxy/:path*');
+});
+
+test('contact form explains the no-JavaScript fallback instead of silently losing a message', () => {
+  assert.match(indexSource, /<noscript>/);
+  assert.match(indexSource, /JavaScript is needed for spam protection/);
+  assert.match(indexSource, /#contact-submit\s*\{\s*display:\s*none/);
+  assert.match(indexSource, /id="contact-submit"/);
+  assert.match(indexSource, /response\.status\s*===\s*403/);
+  assert.match(indexSource, /willmott\.henry@gmail\.com instead/);
+});
+
 test('homepage constrains the mobile page inside the padded viewport', () => {
   assert.match(indexSource, /\.page\s*\{\s*width:\s*calc\(100vw - 2rem\);/);
 });

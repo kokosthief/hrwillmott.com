@@ -1,4 +1,5 @@
 const MAX_FIELD_LENGTH = 4000;
+const { checkBotId } = require('botid/server');
 
 function sanitize(value = '') {
   return String(value).replace(/[<>]/g, '').trim().slice(0, MAX_FIELD_LENGTH);
@@ -91,47 +92,70 @@ async function sendResend({ name, email, subject, message }) {
   return true;
 }
 
-module.exports = async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return respond(res, 405, { ok: false, error: 'Method not allowed' });
-  }
+function createHandler(dependencies = {}) {
+  const verifyBrowser = dependencies.checkBotId || checkBotId;
+  const deliverTelegram = dependencies.sendTelegram || sendTelegram;
+  const deliverEmail = dependencies.sendResend || sendResend;
 
-  try {
-    const body = await parseBody(req);
-
-    // Honeypot. Real users never fill this; simple bots often do.
-    if (body.website) {
-      return respond(res, 200, { ok: true });
+  return async function handler(req, res) {
+    if (req.method !== 'POST') {
+      res.setHeader('Allow', 'POST');
+      return respond(res, 405, { ok: false, error: 'Method not allowed' });
     }
 
-    const name = sanitize(body.name);
-    const email = sanitize(body.email);
-    const subject = sanitize(body.subject);
-    const message = sanitize(body.message);
+    try {
+      const body = await parseBody(req);
 
-    if (!name || !email || !message) {
-      return respond(res, 400, { ok: false, error: 'Name, email and message are required.' });
-    }
+      // Cheap bots often fill fields hidden from real visitors.
+      if (body.website) {
+        return respond(res, 200, { ok: true });
+      }
 
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      return respond(res, 400, { ok: false, error: 'Please enter a valid email address.' });
-    }
-
-    const sentTelegram = await sendTelegram({ name, email, subject, message });
-    const sentEmail = await sendResend({ name, email, subject, message });
-
-    if (!sentTelegram && !sentEmail) {
-      console.error('Contact form is not configured: set CONTACT_TELEGRAM_BOT_TOKEN + CONTACT_TELEGRAM_CHAT_ID or RESEND_API_KEY + CONTACT_TO_EMAIL.');
-      return respond(res, 503, {
-        ok: false,
-        error: 'Contact form is not configured yet. Please try again later.',
+      const verification = await verifyBrowser({
+        advancedOptions: {
+          checkLevel: 'basic',
+          headers: req.headers,
+        },
       });
-    }
+      if (verification.isBot || !verification.isHuman) {
+        return respond(res, 403, {
+          ok: false,
+          error: 'Could not verify this submission. Please reload and try again.',
+        });
+      }
 
-    return respond(res, 200, { ok: true });
-  } catch (error) {
-    console.error(error);
-    return respond(res, 500, { ok: false, error: 'Could not send message. Please try again later.' });
-  }
-};
+      const name = sanitize(body.name);
+      const email = sanitize(body.email);
+      const subject = sanitize(body.subject);
+      const message = sanitize(body.message);
+
+      if (!name || !email || !message) {
+        return respond(res, 400, { ok: false, error: 'Name, email and message are required.' });
+      }
+
+      if (!/^\S+@\S+\.\S+$/.test(email)) {
+        return respond(res, 400, { ok: false, error: 'Please enter a valid email address.' });
+      }
+
+      const sentTelegram = await deliverTelegram({ name, email, subject, message });
+      const sentEmail = await deliverEmail({ name, email, subject, message });
+
+      if (!sentTelegram && !sentEmail) {
+        console.error('Contact form is not configured: set CONTACT_TELEGRAM_BOT_TOKEN + CONTACT_TELEGRAM_CHAT_ID or RESEND_API_KEY + CONTACT_TO_EMAIL.');
+        return respond(res, 503, {
+          ok: false,
+          error: 'Contact form is not configured yet. Please try again later.',
+        });
+      }
+
+      return respond(res, 200, { ok: true });
+    } catch (error) {
+      console.error(error);
+      return respond(res, 500, { ok: false, error: 'Could not send message. Please try again later.' });
+    }
+  };
+}
+
+const handler = createHandler();
+module.exports = handler;
+module.exports.createHandler = createHandler;

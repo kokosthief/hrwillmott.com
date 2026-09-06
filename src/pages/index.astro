@@ -530,7 +530,14 @@
               Website
               <input name="website" tabindex="-1" autocomplete="off" />
             </label>
-            <button type="submit">Send</button>
+            <noscript>
+              <style>#contact-submit { display: none; }</style>
+              <p class="status">
+                JavaScript is needed for spam protection. Email
+                <a href="mailto:willmott.henry@gmail.com">willmott.henry@gmail.com</a> instead.
+              </p>
+            </noscript>
+            <button id="contact-submit" type="submit">Send</button>
             <p class="status" id="form-status" role="status" aria-live="polite"></p>
           </form>
         </details>
@@ -543,6 +550,18 @@
     </div>
 
     <script>
+      import { initBotId } from 'botid/client/core';
+
+      initBotId({
+        protect: [
+          {
+            path: '/api/contact',
+            method: 'POST',
+            advancedOptions: { checkLevel: 'basic' },
+          },
+        ],
+      });
+
       const companyShape = document.querySelector('[data-company-shape]');
       const legalStamp = document.getElementById('legal-stamp');
       const contactDetails = document.getElementById('contact');
@@ -599,6 +618,7 @@
         status.textContent = 'Sending…';
         status.className = 'status';
         button.disabled = true;
+        let blockedByBotProtection = false;
 
         try {
           const response = await fetch(form.action, {
@@ -607,13 +627,16 @@
             body: new URLSearchParams(new FormData(form)),
           });
           const data = await response.json().catch(() => ({}));
+          blockedByBotProtection = response.status === 403;
           if (!response.ok || !data.ok) throw new Error('send-failed');
           form.reset();
           subjectChips.forEach((chip) => chip.setAttribute('aria-pressed', 'false'));
           status.textContent = 'Message filed somewhere alarmingly official.';
           status.className = 'status success';
         } catch {
-          status.textContent = 'The bureaucracy has rejected this attempt. Please try again.';
+          status.textContent = blockedByBotProtection
+            ? 'The spam check could not verify this form. Email willmott.henry@gmail.com instead.'
+            : 'The bureaucracy has rejected this attempt. Please try again.';
           status.className = 'status error';
         } finally {
           button.disabled = false;
